@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent ()}} {% endblock %}
+
+{% block body %}
+    <div id="mainer" class="mainer">
+        <div class="container-fluid container-max-width-xl">
+            <div class="mt-4 flex-row createform">
+                <div class="mt-4 flex-row justify-content-start createform-head">
+                    <h4>Add Manga</h4>
+                    {{ form_start(form) }}
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        {{ form_widget(form.name,{
+                            'attr':{
+                                'class':'form-control',
+                                'placeholder': 'Manga name'
+                            }
+                        }) }}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.name) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="artist">Artist Name:</label>
+                        {{ form_widget(form.artist,{
+                            'attr':{
+                                'class':'form-control',
+                                'placeholder': 'Artist name'
+                            }
+                        }) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="genre">Genre Name:</label>
+                        {{ form_widget(form.genre,{
+                            'attr':{
+                                'class':'form-control',
+                                'placeholder': 'Genre name'
+                            }
+                        }) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        {{ form_widget(form.description,{
+                            'attr':{
+                                'class':'form-control',
+                                'placeholder': 'Description'
+                            }
+                        }) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price:</label>
+                        {{ form_widget(form.price,{
+                            'attr':{
+                                'class':'form-control',
+                                'placeholder': 'Price'
+                            }
+                        }) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="createDate">Create Date:</label>
+                        {{ form_widget(form.create_date,{
+                            'attr':{
+                                'class':'form-control',
+                                'placeholder': 'Pick a date'
+                            }
+                        }) }}
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        {{ form_widget(form.image,{
+                            'attr':{
+                                'placeholder': 'Please select a picture'
+                            }
+                        }) }}
+                    </div>
+                    <div class="mt-md-2 flex-column buttons">
+                        <input type="submit" name="app_create" value="Create" class="btn btn-primary"/>
+                        <input type="submit" name="app_edit" value="Edit" class="btn btn-primary"/>
+                        <input type="submit" name="app_delete" value="Delete" class="btn btn-primary"/>
+                    </div>
+                    {{ form_end(form) }}
+                    {#                    {{ for genreForm in genreForm }}#}
+                    {#                    <div class="mt-4 flex-row AddOthers">#}
+                    {#                        <div class="mt-4 flex-row justify-content-start Others-head">#}
+                    {#                            {{ form_start(genreForm.genre_name) }}#}
+                    {#                            <div class="form-group">#}
+                    {#                                <label for="genreForm">Genre Name:</label>#}
+                    {#                                {{ form_widget(genreForm.genre_name,{#}
+                    {#                                    'attr':{#}
+                    {#                                        'class':'form-control',#}
+                    {#                                        'placeholder': 'Genre name'#}
+                    {#                                    }#}
+                    {#                                }) }}#}
+                    {#                            </div>#}
+                    {#                            <div class="mt-md-2 flex-column buttons">#}
+                    {#                                <input type="submit" name="app_add_genre" value="addGenre" class="btn btn-primary"/>#}
+                    {#                                <input type="submit" name="app_edit_genre" value="editGenre" class="btn btn-primary"/>#}
+                    {#                                <input type="submit" name="app_delete_genre" value="deleteGenre" class="btn btn-primary"/>#}
+                    {#                            </div>#}
+                    {#                            {{ form_end(genreForm.genre_name) }}#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                    {#                    {{ endfor }}#}
+                    {#                    {{ for genreForm in genreForm }}#}
+                    {#                    <div class="mt-4 flex-row AddOthers">#}
+                    {#                        <div class="mt-4 flex-row justify-content-start Others-head">#}
+                    {#                            {{ form_start(artistForm.artist_name) }}#}
+                    {#                            <div class="form-group">#}
+                    {#                                <label for="artistForm">Artist Name:</label>#}
+                    {#                                {{ form_widget(artistForm.artist_name,{#}
+                    {#                                    'attr':{#}
+                    {#                                        'class':'form-control',#}
+                    {#                                        'placeholder': 'Artist name'#}
+                    {#                                    }#}
+                    {#                                }) }}#}
+                    {#                            </div>#}
+                    {#                            <div class="mt-md-2 flex-column buttons">#}
+                    {#                                <input type="submit" name="app_add_artist" value="addArtist" class="btn btn-primary"/>#}
+                    {#                                <input type="submit" name="app_edit_artist" value="editArtist" class="btn btn-primary"/>#}
+                    {#                                <input type="submit" name="app_delete_artist" value="deleteArtist" class="btn btn-primary"/>#}
+                    {#                            </div>#}
+                    {#                            {{ form_end(artistForm.artist_name) }}#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                    {#                    {{ endfor }}#}
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    </div>#}
+{% endblock %}

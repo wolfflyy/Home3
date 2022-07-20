@@ -1,0 +1,10 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+#        envelope:
+#            sender: 'ducanh11022001@gmil.com'
+#            recipients: ['foo@example.com', 'bar@example.com']
+#            headers:
+#                From: 'M Mail Bot <ducanh11022001@gmil.com>'
+#                Bcc: 'baz@example.com'
+#                X-Custom-Header: 'foobar'

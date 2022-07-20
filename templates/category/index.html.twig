@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent ()}} {% endblock %}
+
+{% block body %}
+    {#    <div id="app" class="wrapper wrapper-browse">#}
+    {#        <header id="header" class="header">#}
+    {#            <div class="container-fluid container-max-width-xl">#}
+    {#                <div class="w-100 d-flex flex-column flex-md-row align-items-center">#}
+
+    {#                    <a class="brand" href="/">#}
+    {#                        <img src="https://apprecs.org/gp/images/app-icons/300/2a/com.comikin.reader2.jpg" height="40" alt="Manga.New"/>#}
+    {#                    </a>#}
+
+
+    {#                    <nav class="mt-3 mt-md-0 ms-md-3 nav">#}
+    {#                        <a class="nav-link" href="/">Home</a>#}
+    {#                        <a class="nav-link" href="/latest">Latest</a>#}
+    {#                        <a class="nav-link active" href="/browse">Browse</a>#}
+    {#                        <a class="nav-link" href="/search">Search</a>#}
+
+    {#                        <a class="nav-link" href={{ path ('app_homepage') }}>Home</a>#}
+    {#                        <a class="nav-link" href={{ path ('app_latest') }}>Latest</a>#}
+    {#                        <a class="nav-link active" href={{ path ('app_browse') }}>Browse</a>#}
+    {#                        <a class="nav-link" href={{ path ('app_search') }}>Search</a>#}
+    {#                    </nav>#}
+
+    {#                    <form class="d-none d-lg-inline ms-auto me-3 form-inline search" method="GET" action="/search">#}
+    {#                        <input class="form-control" type="search" name="word" autocomplete="off" placeholder="Search">#}
+    {#                        <a class="d-inline-flex align-content-center align-items-center icon-random" href="/random">#}
+    {#                            <i class="fas fa-fw fa-random"></i>#}
+    {#                        </a>#}
+    {#                        <button class="btn btn-primary" type="submit">#}
+    {#                            <i class="fas fa-fw fa-search"></i>#}
+    {#                        </button>#}
+    {#                    </form>#}
+
+
+    {#                    <div class="mt-3 mt-md-0 ms-md-auto d-flex align-items-center user">#}
+
+    {#                        <a class="ms-2" href="/my-history">#}
+    {#                            <i class="fas fa-fw fa-lg fa-history"></i>#}
+    {#                        </a>#}
+
+    {#                        <a class="ms-2" href="/my-updates">#}
+    {#                            <i class="fas fa-fw fa-lg fa-heart"></i>#}
+    {#                        </a>#}
+
+    {#                        <a class="ms-2" href="/random">#}
+    {#                            <i class="fas fa-fw fa-lg fa-random"></i>#}
+    {#                        </a>#}
+
+    {#                        <a class="ms-2" href="/my-instructions">#}
+    {#                            <i class="fas fa-fw fa-lg fa-info-circle"></i>#}
+    {#                        </a>#}
+
+    {#                        <a class="ms-2" href="/settings">#}
+    {#                            <i class="fas fa-fw fa-lg fa-cog"></i>#}
+    {#                        </a>#}
+
+    {#                        <a class="ms-2 avatar guest" href="/profile">#}
+    {#                            <i class="fas fa-fw fa-2x fa-user-circle"></i>#}
+    {#                        </a>#}
+
+    {#                        <nav class="mt-3 mt-md-0 ms-md-3 nav">#}
+    {#                            <a class="nav-link" href="{{ path ('app_login') }}">Login</a>#}
+    {#                        </nav>#}
+    {#                        <nav class="mt-3 mt-md-0 ms-md-3 nav">#}
+    {#                            <a class="nav-link" href="{{ path ('app_register') }}">Registration</a>#}
+    {#                        </nav>#}
+
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </header>#}
+    <div id="mainer" class="mainer">
+        <div class="container-fluid container-max-width-xl">
+            <div class="mt-4 justify-content-between line-b-f">
+                <h4>Browse Manga</h4>
+
+                {#                    <div class="mt-3 p-2 d-flex flex-column user-select-none filter">#}
+                {#                        <div class="mt-4 d-flex justify-content-between align-items-center cursor-pointer filter-head">#}
+                {#                            <b>Filter</b>#}
+                {#                            <div>#}
+                {#                                <i class="fas fa-minus-square"></i>#}
+                {#                                <i class="fas fa-plus-square"></i>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+
+                <div class="mt-4 d-flex filter">
+                    <div class="mt-4 d-flex justify-content-between filter-head">
+                        <ul>
+                            <a href="/browse/romance">Romance</a>
+                        </ul>
+                        <ul>
+                            <a href="/browse/action">Action</a>
+                        </ul>
+                        <ul>
+                            <a href="/browse/horror">Horror</a>
+                        </ul>
+                        <ul>
+                            <a href="/browse/mystery">Mystery</a>
+                        </ul>
+                        <ul>
+                            <a href="/browse/shoujo">Shoujo</a>
+                        </ul>
+                        <ul>
+                            <a href="/browse/shounen">Shounen</a>
+                        </ul>
+                        <ul>
+                            <a href="/browse/fantasy">Fantasy</a>
+                        </ul>
+                        <ul>
+                            <a href="/browse/yuri">Yuri</a>
+                        </ul>
+                        <ul>
+                            <a href="/browse/Yaoi">Yaoi</a>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="mt-4 browser-sorter">
+                    <div>
+                        <span>Order by:</span>
+                        <a class="ms-2" href="/browse?sort=title.az">AZ</a>
+                        <a class="ms-2" href="/browse?sort=create.za">Create time</a>
+                    </div>
+                </div>
+                <div id="series-list" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 line-t series-list">
+                    <div class="col item line-b is-hot no-flag">
+                        <a class="item-cover" href="">
+                            <img src="" class="rounded"/>
+                        </a>
+                        <div class="item-text">
+                            <a class="item-title" href="">placeholder</a>
+                        </div>
+                        <div class="item-genre">
+                            <span>Romance</span>
+                        </div>
+                        <div class="item-information">
+                            <a class="visited" href=""></a>
+                        </div>
+                        <div>
+                            <a class="me-2" href="">
+                                <img class="rounded-circle avatar-sm" src=""/>
+                            </a>
+                            <i>2 Hours ago</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    </div>#}
+{% endblock %}

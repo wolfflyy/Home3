@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent ()}} {% endblock %}
+
+{% block body %}
+    <div id="mainer" class="mainer">
+        <div class="container-fluid container-max-width-xl">
+            <div class="mt-4 flex-row createform">
+                <div class="mt-4 flex-row justify-content-start createform-head">
+                    <h4>Popular updates</h4>
+                    <tbody>
+                    {% for manga in manga %}
+                        <div class="col item line-b no-flag"></div>
+                            <div class="item-picture">
+                                <td><a href="{{ asset('public/uploads/manga_image/' ~ manga.getImage()) }}" class="rounded"></a></td>
+                                    </div>
+                                    <div class="item-name">
+                                    <td>{{ manga.name }}</td>
+                                    </div>
+                                    <div class="item-price">
+                                    <td>{{ manga.price }}</td>
+                                    </div>
+                                    <div class="item-text">
+                                    <td>{{ manga.description }}</td>
+                                    </div>
+                                    <div class="item-date">
+                                    <td>{{ manga.CreateDate|date('F j,Y') }}</td>
+                                    </div>
+                                    <div class="item-buttons">
+                                    <td>
+{#                                        <a href="{{ path('app_edit_manga', {'id':manga.id})}}" class="btn btn-success">Edit</a>#}
+                                        <a href="{{ path('app_view_manga', {'id':manga.id})}}" class="btn btn-success">View</a>
+                                        <a href="{{ path('app_delete_manga', {'id':manga.id})}}" class="btn btn-danger">Delete</a>
+                                    </td>
+                                    </div>
+                            {% endfor %}
+                    </tbody>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
