@@ -25,16 +25,19 @@ class AddMangaType extends AbstractType
 //            ->add('genre', EntityType::class,array('class'=>'App\Entity\Genre','choice_label'=>"genre_name"))
 //            ->add('artist', TextType::class)
 //            ->add('genre', TextType::class)
-            ->add('artist', EntityType::class, [
-                'class'=>Artist::class,
-                'choice_label'=>'artist_name',
-                'mapped'=>false,
-            ])
-            ->add('genre', EntityType::class, [
-                'class'=>Genre::class,
-                'choice_label'=>'genre_name',
-                'mapped'=>false,
-            ])
+//            ->add('artist', EntityType::class, [
+//                'class'=>Artist::class,
+//                'choice_label'=>'artist_name',
+//                'mapped'=>false,
+//            ])
+//            ->add('genre', EntityType::class, [
+//                'class'=>Genre::class,
+//                'choice_label'=>'genre_name',
+//                'mapped'=>false,
+//            ])
+
+            ->add('artist',EntityType::class,array('class'=>'App\Entity\Artist','choice_label'=>'artist_name'))
+            ->add('genre',EntityType::class,array('class'=>'App\Entity\Genre','choice_label'=>'genre_name'))
             ->add('description', TextareaType::class)
             ->add('price', TextType::class)
             ->add('create_date', DateType::class,['widget' => 'single_text'])

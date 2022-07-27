@@ -17,30 +17,34 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AddMangaController extends AbstractController
 {
-//    #[Route('/add/MangaWithGenreAndArtist/{id}', name: 'app_list_manga')]
+    //    #[Route('/add/MangaWithGenreAndArtist/{id}', name: 'app_list_manga')]
     /**
-     * @Route("/add/MangaWithGenreAndArtist/{id}", name="app_list_manga")
+     * @Route("/add/MangaWithGenreAndArtist", name="app_list_manga")
      */
-    public function Show(ManagerRegistry $doctrine, Request $request, SluggerInterface $slugger, $id): Response
+    public function List(ManagerRegistry $doctrine): Response
     {
-        $entitymanager = $doctrine->getManager();
-        $manga = $entitymanager->getRepository(Manga::class);
-        $genre = $entitymanager->getRepository(Genre::class);
-        $artist = $entitymanager->getRepository(Artist::class);
-
-//        $manga = $doctrine->getRepository(Manga::class)->findMangaWithGenreAndArtist();
-//        $genre = $doctrine->getRepository(Genre::class)->findAll();
-//        $artist = $doctrine->getRepository(Artist::class)->findAll();
-
-//        $genreName = $manga->getGenre()->getGenreName();
-
-        $manga = $manga->findMangaWithGenreAndArtist($id);
-        return $this->render('add_manga/index.html.twig', array (
-            'manga' => $manga,
-            'genre' => $genre,
-            'artist' => $artist,
-        ));
+        $mangas = $doctrine->getRepository(Manga::class)->findAll();
+        $genres = $doctrine->getRepository(Genre::class)->findAll();
+        return $this->render('add_manga/index.html.twig', ['mangas' => $mangas,
+            'genres' => $genres
+        ]);
     }
+
+    /**
+     * @Route("/add/mangaByGenre", name="mangaByGenre")
+     */
+    public function mangaByGenreAction(ManagerRegistry $doctrine, $id): Response
+    {
+        $genre = $doctrine->getRepository(Genre::class)->find($id);
+        $mangas = $genre->getMangas();
+        $genres = $doctrine->getRepository(Genre::class)->findAll();
+        return $this->render('add_manga/index.html.twig', [
+            'mangas' => $mangas,
+            'genres' => $genres
+        ]);
+
+    }
+
 
     /**
      * @Route("/add/manga/create", name="app_create_manga")
@@ -113,35 +117,52 @@ class AddMangaController extends AbstractController
     }
 
     /**
-     * @Route("/add/manga/edit", name="app_edit_manga")
+     * @Route("/add/manga/edit/{id}", name="app_edit_manga")
      */
-    public function edit(ManagerRegistry $doctrine, $id, Request $request, SluggerInterface $slugger): Response
+    public function edit(ManagerRegistry $doctrine, int $id, Request $request): Response
     {
-        $manga = new Manga();
-        $form = $this->createForm(AddMangaType::class, $manga);
+        $entitymanager = $doctrine->getManager();
+        $manga = $entitymanager->getRepository(Manga::class)->find($id);
+        $form = $this->createForm(AddMangaType::class, @$manga);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entitymanager = $doctrine->getManager();
-            $manga = $entitymanager->getRepository(Manga::class)->find($id);
+            $entitymanager->persist($manga);
             $entitymanager->flush();
 
-            $this->addFlash(
-                'notice',
-                'Manga edited'
-            );
-
-            return $this->redirectToRoute('app_homepage');
+            return $this->redirectToRoute('app_list_manga', [
+                'id' => $manga->getId()
+            ]);
         }
         return $this->render('add_manga/edit.html.twig', [
-            'form' => $form->createView()
+            'form' => $form,
         ]);
+    }
+    public function saveChanges(ManagerRegistry $doctrine, $form, $request, $manga)
+    {
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $manga->setName($request->request->get('manga')['name']);
+            $manga->setGenre($request->request->get('manga')['genre']);
+            $manga->setDescription($request->request->get('manga')['description']);
+            $manga->setPrice($request->request->get('manga')['price']);
+            $manga->setDate(\DateTime::createFromFormat('Y-m-d', $request->request->get('manga')['create_date']));
+            $entitymanager = $doctrine->getManager();
+            $entitymanager->persist($manga);
+            $entitymanager->flush();
+
+            return true;
+        }
+
+        return false;
     }
 
 
     /**
-     * @Route("/add/manga/delete", name="app_delete_manga")
+     * @Route("/add/manga/delete/{id}", name="app_delete_manga")
      */
     public function delete(ManagerRegistry $doctrine, $id): Response
     {
@@ -155,7 +176,7 @@ class AddMangaController extends AbstractController
             'Manga Deleted'
         );
 
-        return $this->redirectToRoute('app_homepage');
+        return $this->redirectToRoute('app_list_manga');
     }
 //    public function adminDashboard(): Response
 //    {

@@ -27,14 +27,15 @@ class Manga
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $Price;
 
-    #[ORM\ManyToMany(targetEntity: PurchaseDetails::class, inversedBy: 'mangas')]
-    private $purchase;
+    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'orderItems')]
+    private $orderItems;
 
-    #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'mangas')]
+    #[ORM\ManyToOne(targetEntity: Genre::class, inversedBy: 'mangas')]
+    #[ORM\JoinColumn(nullable: false)]
     private $Genre;
 
     #[ORM\ManyToOne(targetEntity: Artist::class, inversedBy: 'mangas')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn(nullable: false)]
     private $Artist;
 
     #[ORM\Column(type: 'date')]
@@ -42,8 +43,7 @@ class Manga
 
     public function __construct()
     {
-        $this->purchase = new ArrayCollection();
-        $this->Genre = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,33 +105,30 @@ class Manga
     }
 
     /**
-     * @return Collection<int, PurchaseDetails>
+     * @return Collection<int, OrderItem>
      */
-    public function getPurchase(): Collection
+    public function getOrderItems(): Collection
     {
-        return $this->purchase;
+        return $this->orderItems;
     }
 
-    public function addPurchase(PurchaseDetails $purchase): self
+    public function addOrderItem(OrderItem $orderItem): self
     {
-        if (!$this->purchase->contains($purchase)) {
-            $this->purchase[] = $purchase;
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems[] = $orderItem;
         }
 
         return $this;
     }
 
-    public function removePurchase(PurchaseDetails $purchase): self
+    public function removeOrderItem(OrderItem $orderItem): self
     {
-        $this->purchase->removeElement($purchase);
+        $this->orderItems->removeElement($orderItem);
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Genre>
-     */
-    public function getGenre(): Collection
+    public function getGenre(): ?Genre
     {
         return $this->Genre;
     }
@@ -143,21 +140,22 @@ class Manga
         return $this;
     }
 
-    public function addGenre(Genre $genre): self
-    {
-        if (!$this->Genre->contains($genre)) {
-            $this->Genre[] = $genre;
-        }
+//    public function addGenre(Genre $genre): self
+//    {
+//        if (!$this->Genre->contains($genre)) {
+//            $this->Genre[] = $genre;
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeGenre(Genre $genre): self
+//    {
+//        $this->Genre->removeElement($genre);
+//
+//        return $this;
+//    }
 
-        return $this;
-    }
-
-    public function removeGenre(Genre $genre): self
-    {
-        $this->Genre->removeElement($genre);
-
-        return $this;
-    }
 
 
     public function getArtist(): ?Artist
@@ -171,6 +169,21 @@ class Manga
 
         return $this;
     }
+//    public function addArtist(Artist $artist): self
+//    {
+//        if (!$this->Artist->contains($artist)) {
+//            $this->Artist[] = $artist;
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeArtist(Artist $artist): self
+//    {
+//        $this->Artist->removeElement($artist);
+//
+//        return $this;
+//    }
 
     public function getCreateDate(): ?\DateTimeInterface
     {

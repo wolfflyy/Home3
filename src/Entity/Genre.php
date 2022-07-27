@@ -18,7 +18,7 @@ class Genre
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $Genre_name;
 
-    #[ORM\ManyToMany(targetEntity: Manga::class, mappedBy: 'Genre')]
+    #[ORM\OneToMany(targetEntity: Manga::class, mappedBy: 'Genre')]
     private $mangas;
 
     public function __construct()
@@ -55,7 +55,7 @@ class Genre
     {
         if (!$this->mangas->contains($manga)) {
             $this->mangas[] = $manga;
-            $manga->addGenre($this);
+            $manga->setGenre($this);
         }
 
         return $this;
@@ -64,7 +64,10 @@ class Genre
     public function removeManga(Manga $manga): self
     {
         if ($this->mangas->removeElement($manga)) {
-            $manga->removeGenre($this);
+//            $manga->removeGenre($this);
+            if ($manga->getGenre() === $this) {
+                $manga->setGenre(null);
+            }
         }
 
         return $this;

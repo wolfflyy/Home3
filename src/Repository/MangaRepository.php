@@ -41,17 +41,64 @@ class MangaRepository extends ServiceEntityRepository
     }
 
 
-//    public function findAllMangaWithLimit($id): ?Manga
+    public function findManga(int $id): array
+    {
+        $entitymanager = $this->getEntityManager();
+
+        $query = $entitymanager->createQuery(
+             'SELECT distinct m.Image, m.Name, m.Price, m.Description, m.create_date, a.Artist_name, g.Genre_name
+             FROM App\Entity\Manga m, App\Entity\Artist a, App\Entity\Genre g
+             WHERE m.id = :id
+             AND m.Artist = a.id AND m.Genre = g.id'
+            )->setParameter('id', $id);
+        return $query->getResult();
+    }
+
+    public function findMangaByAZ($id): array
+    {
+        $entitymanager = $this->getEntityManager();
+
+        $query = $entitymanager->createQuery(
+            'SELECT distinct m.Image, m.Name, m.Price, m.Description, m.create_date, a.Artist_name, g.Genre_name
+             FROM App\Entity\Manga m, App\Entity\Artist a, App\Entity\Genre g
+             WHERE m.id = :id
+             AND m.Artist = a.id AND m.Genre = g.id
+             ORDER BY m.name ASC'
+
+        )->setParameter('id', $id);
+        return $query->getResult();
+    }
+
+    public function findMangaLatest(int $id): array
+    {
+        $entitymanager = $this->getEntityManager();
+
+        $query = $entitymanager->createQuery(
+            'SELECT distinct m.Image, m.Name, m.Price, m.Description, m.create_date
+             FROM App\Entity\Manga m
+             WHERE m.create_date > :create_date         
+             ORDER BY m.create_date ASC'
+
+        )->setParameter('id', $id);
+        return $query->getResult();
+    }
+
+
+
+//    public function findMangaWithGenreAndArtist(string $id): array
 //    {
-//        $entitymanager = $this->getEntityManager();
+//        $conn = $this->getEntityManager()->getConnection();
 //
-//        $query = $entitymanager->createQuery(
-//            'SELECT m
-//            FROM App\Entity\Manga m
-//            WHERE m.id = :id
-//            ORDER BY m.id ASC'
-//            )->setParameter('id', $id);
-//        return $query->getResult();
+//        $sql = '
+//            SELECT m.Name, m.Price, m.description, m.CreateDate, m.Image, a.Artist_name, g.Genre_name *
+//            FROM manga m, artist a, genre g
+//            WHERE m.id = :a.id AND m.id = :g.id
+//            ORDER BY m.id ASC
+//        ';
+//        $stmt = $conn->prepare($sql);
+//        $stmt->execute(['id' => $id]);
+//
+//        return $stmt->fetchAllAssociative();
 //    }
 
 
@@ -81,26 +128,29 @@ class MangaRepository extends ServiceEntityRepository
 //        return $qb ?: $this->createQueryBuilder('m');
 //    }
 
-    /**
-     * @return Manga[] Returns an array of Manga objects
-     */
-    public function findMangaWithGenreAndArtist($value): array
-    {
-        return $this->createQueryBuilder('m')
+//    /**
+//     * @return Manga[] Returns an array of Manga objects
+//     */
+//    public function findMangaWithGenreAndArtist($value): array
+//    {
+//        return $this->createQueryBuilder('m')
 //            ->andWhere('m.id= :val')
-            ->join('m.genre', 'g')
-            ->where('g.GenreName= :val')
+
+//            ->join('m.genre', 'g')
+//            ->where('g.GenreName= :val')
+
 //            ->select('m')
 //            ->from('Manga', 'm')
 //            ->innerJoin('m.manga', 'g', Expr\Join::WITH, 'g.genre = m.manga')
 //            ->innerJoin('m.manga', 'a', Expr\Join::WITH, 'a.artist = m.manga')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+
+//            ->setParameter('val', $value)
+//            ->orderBy('m.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//    }
 
 
 //    public function findOneBySomeField($value): ?Manga

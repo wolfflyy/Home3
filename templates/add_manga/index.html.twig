@@ -7,99 +7,56 @@
         <div class="container-fluid container-max-width-xl">
             <div class="mt-4 flex">
                 <h4>Manga List</h4>
+
                 <div class="mt-4 justify-content-between line-b-f">
                     <tbody>
-                    {% for manga in manga %}
+                    {% for genre in genres %}
+{#                    <div class="item-id">#}
+{#                        <td>{{ genre.id }}</td>#}
+{#                        <td> {{ genre.GenreName }}</td>#}
+{#                        <div class="item-button">#}
+{#                        <a href="{{path('mangaByGenre',{'id':genre.id})}} " class='btn btn-success'>View</a>#}
+{#                        </div>#}
+{#                    </div>#}
+                        <div class="section-body">
+                            <ul class="genre-list">
+                                <span>
+                                    <a href="{{path('mangaByGenre',{'id':genre.id})}}" class="btn btn-success">{{ genre.GenreName }}</a>
+                                </span>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                    </tbody>
+                </div>
+
+                <div class="mt-4 justify-content-between line-b-f">
+                    <tbody>
+                    {% for manga in mangas %}
                         <div class="col item line-b no-flag"></div>
                         <div class="item-picture">
-                            <td><a href="{{ asset('public/uploads/manga_image/' ~ manga.image) }}" class="rounded"></a></td>
+                            <td><img src="{{ asset('uploads/manga_image/' ~ manga.Image) }}" height="400px" width="300px"></td>
                         </div>
                         <div class="item-name">
-                            <td>{{ manga.name }}</td>
+                            <td>{{ manga.Name }}</td>
                         </div>
                         <div class="item-price">
-                            <td>{{ manga.price }}</td>
+                            <td>{{ manga.Price }}</td>
                         </div>
                         <div class="item-text">
-                            <td>{{ manga.description }}</td>
+                            <td>{{ manga.Description }}</td>
                         </div>
                         <div class="item-date">
                             <td>{{ manga.CreateDate|date('F j,Y') }}</td>
                         </div>
                         <div class="item-buttons">
                             <td>
-                                {#                                        <a href="{{ path('app_edit_manga', {'id':manga.id})}}" class="btn btn-success">Edit</a>#}
-                                <a href="{{ path('app_view_manga', {'id':manga.id})}}" class="btn btn-success">View</a>
+                                <a href="{{ path('app_edit_manga', {'id':manga.id})}}" class="btn btn-success">Edit</a>
+{#                                <a href="{{ path('app_view_manga', {'id':manga.id})}}" class="btn btn-success">View</a>#}
                                 <a href="{{ path('app_delete_manga', {'id':manga.id})}}" class="btn btn-danger">Delete</a>
                             </td>
                         </div>
                     {% endfor %}
                     </tbody>
-{#                    <tbody>#}
-{#                    <div class="bs-example" data-example-id="striped-table">#}
-{#                        <table class="table table-striped">#}
-{#                            <thead>#}
-{#                            <tr>#}
-{#                                <th>Id</th>#}
-{#                                <th>Image</th>#}
-{#                                <th>Name</th>#}
-{#                                <th>Artist Name</th>#}
-{#                                <th>Genre Name</th>#}
-{#                                <th>Description</th>#}
-{#                                <th>Price</th>#}
-{#                                <th>Create date</th>#}
-{#                            </tr>#}
-{#                            </thead>#}
-{#                            <tbody>#}
-    {#                        {% for manga in manga %}#}
-    {#                            <tr>#}
-    {#                                <th scope="row">{{ manga.id }}</th>#}
-    {#                                <td>{{ manga.id }}</td>#}
-    {#                                <td><a href="{{ asset('uploads/manga_image/' ~ manga.image) }}">View image</a></td>#}
-    {#                                <td>{{ manga.name }}</td>#}
-    {#                                <td>{{ manga.price }}</td>#}
-    {#                                <td>{{ manga.description }}</td>#}
-    {#                                <td>{{ manga.price }}</td>#}
-    {#                                <td>{{ manga.CreateDate|date('F j,Y') }}</td>#}
-    {#                                <td>#}
-    {#                                    <a href="{{ path('app_edit_manga', {'id':manga.id})}}" class="btn btn-default">Edit</a>#}
-    {#                                    <a href="{{ path('app_delete_manga', {'id':manga.id})}}" class="btn btn-danger">Delete</a>#}
-    {#                                </td>#}
-    {#                            </tr>#}
-    {#                        {% endfor %}#}
-
-
-    {#                        {% for manga in manga %}#}
-    {#                            <tr>#}
-    {#                                <div class="row-cols-lg-3 item line-b no-flag">#}
-    {#                                <th scope="row">{{ manga.id }}</th>#}
-    {#                                <td><a href="{{ path('app_list_manga', {'id':manga.id})}}">{{ manga.name }}</a></td>#}
-    {#                                </div>#}
-    {#                                <div class="row-cols-lg-3 item line-b no-flag">#}
-    {#                                <th scope="row">{{ manga.image }}</th>#}
-    {#                                <td><a href="{{ path('app_list_manga', {'image':manga.image})}}"></a></td>#}
-    {#                                </div>#}
-    {#                                <div class="row-cols-lg-3 item line-b no-flag">#}
-    {#                                <th scope="row">{{ manga.description }}</th>#}
-    {#                                <td><a href="{{ path('app_list_manga', {'description':manga.description})}}"></a></td>#}
-    {#                                </div>#}
-    {#                                <div class="row-cols-lg-3 item line-b no-flag">#}
-    {#                                <th scope="row">{{ manga.price }}</th>#}
-    {#                                <td><a href="{{ path('app_list_manga', {'price':manga.price})}}"></a></td>#}
-    {#                                </div>#}
-    {#                                <div class="row-cols-lg-3 item line-b no-flag">#}
-    {#                                <th scope="row">{{ manga.CreateDate|date('F j,Y')}}</th>#}
-    {#                                <td><a href="{{ path('app_list_manga', {'CreateDate':manga.CreateDate|date('F j,Y')})}}"></a></td>#}
-    {#                                </div>#}
-    {#                                <td>#}
-    {#                                    <a href="{{ path('app_edit_manga', {'id':manga.id}) }}" class="btn btn-primary">Edit</a>#}
-    {#                                    <a href="{{ path('app_delete_manga', {'id':manga.id})}}"class="btn btn-primary">Delete</a>#}
-    {#                                </td>#}
-    {#                            </tr>#}
-    {#                        {% endfor %}#}
-{#                            </tbody>#}
-{#                        </table>#}
-                    </div>
                 </div>
             </div>
         </div>

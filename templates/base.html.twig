@@ -47,15 +47,15 @@
                         {#                        <a class="nav-link" href="/browse">Browse</a>#}
                         {#                        <a class="nav-link" href="/search">Search</a>#}
                         <li class="nav-link"><a href="{{ path ('app_homepage') }}">Home</a></li>
-                        <li class="nav-link"><a href="{{ path ('app_latest') }}">Latest</a></li>
-                        <li class="nav-link"><a href="{{ path ('app_category') }}">Categories</a></li>
+                        <li class="nav-link"><a href="{{ path ('app_latest_manga') }}">Latest</a></li>
+                        <li class="nav-link"><a href="{{ path ('app_category_manga') }}">Categories</a></li>
                         <li class="nav-link"><a href="{{ path ('app_create_manga') }}">Add Manga</a></li>
                     </nav>
 
 
                     <form class="d-none d-lg-inline ms-auto me-3 form-inline search" method="GET" action="/search">
                         <input class="form-control" type="search" name="word" autocomplete="on" placeholder="Search">
-                        <a class="d-inline-flex align-content-center align-items-center icon-random" href="/cart">
+                        <a class="d-inline-flex align-content-center align-items-center icon-random" href="{{ path('cart') }}">
                             <li class="fas fa-fw fa-shopping-cart"></li>
                         </a>
                         <button class="btn btn-primary" type="submit">

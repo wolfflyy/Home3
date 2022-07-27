@@ -76,8 +76,8 @@
                     </div>
                     <div class="mt-md-2 flex-column buttons">
                         <input type="submit" name="app_create" value="Create" class="btn btn-primary"/>
-{#                        <input type="submit" name="app_edit" value="Edit" class="btn btn-primary"/>#}
-{#                        <input type="submit" name="app_delete" value="Delete" class="btn btn-primary"/>#}
+                        <input type="submit" name="app_edit" value="Edit" class="btn btn-primary"/>
+                        <input type="submit" name="app_delete" value="Delete" class="btn btn-primary"/>
                     </div>
                     {{ form_end(form) }}
 
@@ -86,7 +86,7 @@
                             <a href="{{ path ('app_create_artist') }}" class="btn btn-primary">Add Artist</a>
                             <a href="{{ path ('app_create_genre') }}" class="btn btn-primary">Add Genre</a>
 {#                            <a href="{{ path ('app_list_manga', {'id': id}) }}" class="btn btn-primary">Manga List</a>#}
-                            <a href="/add/MangaWithGenreAndArtist/{id}" class="btn btn-primary">Manga List</a>
+                            <a href="{{ path ('app_list_manga') }}" class="btn btn-primary">Manga List</a>
                         </div>
                     </div>
 {#                    {{ for genreForm in genreForm }}#}
