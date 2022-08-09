@@ -54,34 +54,34 @@ class MangaRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findMangaByAZ($id): array
-    {
-        $entitymanager = $this->getEntityManager();
-
-        $query = $entitymanager->createQuery(
-            'SELECT distinct m.Image, m.Name, m.Price, m.Description, m.create_date, a.Artist_name, g.Genre_name
-             FROM App\Entity\Manga m, App\Entity\Artist a, App\Entity\Genre g
-             WHERE m.id = :id
-             AND m.Artist = a.id AND m.Genre = g.id
-             ORDER BY m.name ASC'
-
-        )->setParameter('id', $id);
-        return $query->getResult();
-    }
-
-    public function findMangaLatest(int $id): array
-    {
-        $entitymanager = $this->getEntityManager();
-
-        $query = $entitymanager->createQuery(
-            'SELECT distinct m.Image, m.Name, m.Price, m.Description, m.create_date
-             FROM App\Entity\Manga m
-             WHERE m.create_date > :create_date         
-             ORDER BY m.create_date ASC'
-
-        )->setParameter('id', $id);
-        return $query->getResult();
-    }
+//    public function findMangaByAZ($id): array
+//    {
+//        $entitymanager = $this->getEntityManager();
+//
+//        $query = $entitymanager->createQuery(
+//            'SELECT distinct m.Image, m.Name, m.Price, m.Description, m.create_date, a.Artist_name, g.Genre_name
+//             FROM App\Entity\Manga m, App\Entity\Artist a, App\Entity\Genre g
+//             WHERE m.id = :id
+//             AND m.Artist = a.id AND m.Genre = g.id
+//             ORDER BY m.name ASC'
+//
+//        )->setParameter('id', $id);
+//        return $query->getResult();
+//    }
+//
+//    public function findMangaLatest(int $id): array
+//    {
+//        $entitymanager = $this->getEntityManager();
+//
+//        $query = $entitymanager->createQuery(
+//            'SELECT distinct m.Image, m.Name, m.Price, m.Description, m.create_date
+//             FROM App\Entity\Manga m
+//             WHERE m.create_date > :create_date
+//             ORDER BY m.create_date ASC'
+//
+//        )->setParameter('id', $id);
+//        return $query->getResult();
+//    }
 
 
 

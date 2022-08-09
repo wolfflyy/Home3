@@ -19,7 +19,7 @@ class AddMangaController extends AbstractController
 {
     //    #[Route('/add/MangaWithGenreAndArtist/{id}', name: 'app_list_manga')]
     /**
-     * @Route("/add/MangaWithGenreAndArtist", name="app_list_manga")
+     * @Route("admin/add/MangaWithGenreAndArtist", name="app_list_manga")
      */
     public function List(ManagerRegistry $doctrine): Response
     {
@@ -31,7 +31,7 @@ class AddMangaController extends AbstractController
     }
 
     /**
-     * @Route("/add/mangaByGenre", name="mangaByGenre")
+     * @Route("admin/add/mangaByGenre", name="mangaByGenre")
      */
     public function mangaByGenreAction(ManagerRegistry $doctrine, $id): Response
     {
@@ -47,7 +47,7 @@ class AddMangaController extends AbstractController
 
 
     /**
-     * @Route("/add/manga/create", name="app_create_manga")
+     * @Route("admin/add/manga/create", name="app_create_manga")
      */
     public function create(ManagerRegistry $doctrine, Request $request, SluggerInterface $slugger)
     {
@@ -117,7 +117,7 @@ class AddMangaController extends AbstractController
     }
 
     /**
-     * @Route("/add/manga/edit/{id}", name="app_edit_manga")
+     * @Route("admin/add/manga/edit/{id}", name="app_edit_manga")
      */
     public function edit(ManagerRegistry $doctrine, int $id, Request $request): Response
     {
@@ -136,9 +136,7 @@ class AddMangaController extends AbstractController
                 'id' => $manga->getId()
             ]);
         }
-        return $this->render('add_manga/edit.html.twig', [
-            'form' => $form,
-        ]);
+        return $this->renderForm('add_manga/edit.html.twig', ['form' => $form,]);
     }
     public function saveChanges(ManagerRegistry $doctrine, $form, $request, $manga)
     {
@@ -162,7 +160,7 @@ class AddMangaController extends AbstractController
 
 
     /**
-     * @Route("/add/manga/delete/{id}", name="app_delete_manga")
+     * @Route("admin/add/manga/delete/{id}", name="app_delete_manga")
      */
     public function delete(ManagerRegistry $doctrine, $id): Response
     {
@@ -178,12 +176,5 @@ class AddMangaController extends AbstractController
 
         return $this->redirectToRoute('app_list_manga');
     }
-//    public function adminDashboard(): Response
-//    {
-//        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-//
-//        // or add an optional message - seen by developers
-//        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
-//    }
 
 }

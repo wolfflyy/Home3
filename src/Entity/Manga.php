@@ -24,11 +24,8 @@ class Manga
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $Image;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'float')]
     private $Price;
-
-    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'orderItems')]
-    private $orderItems;
 
     #[ORM\ManyToOne(targetEntity: Genre::class, inversedBy: 'mangas')]
     #[ORM\JoinColumn(nullable: false)]
@@ -92,12 +89,12 @@ class Manga
 //        return 'public/uploads/manga_image'.$this->getImage();
 //    }
 
-    public function getPrice(): ?string
+    public function getPrice(): ?float
     {
         return $this->Price;
     }
 
-    public function setPrice(?string $Price): self
+    public function setPrice(?float $Price): self
     {
         $this->Price = $Price;
 

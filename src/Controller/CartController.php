@@ -33,4 +33,13 @@ class CartController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/confirmation", name="confirm")
+     */
+    public function details(Request $request): Response
+    {
+        return $this->render('cart/confirmation.html.twig', [
+        ]);
+    }
 }

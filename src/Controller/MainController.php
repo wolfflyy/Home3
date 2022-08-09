@@ -17,6 +17,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+
+/**
+ * Class MainController
+ * @package App\Controller
+ */
 class MainController extends AbstractController
 {
 //    #[Route('/', name: 'app_homepage')]
@@ -53,7 +58,6 @@ class MainController extends AbstractController
 
 
 
-    //    #[Route('/add/MangaWithGenreAndArtist/{id}', name: 'app_list_manga')]
     /**
      * @Route("/add/manga_view/{id}", name="app_view_manga")
      */
@@ -152,14 +156,14 @@ class MainController extends AbstractController
 //    }
 
 
-    /**
-     * @Route("/latest", name="app_latest")
-     */
-    public function Latest(): Response
-    {
-        return $this->render('Main/latest.html.twig', [
-
-        ]);
-    }
+//    /**
+//     * @Route("/latest", name="app_latest")
+//     */
+//    public function Latest(): Response
+//    {
+//        return $this->render('Main/latest.html.twig', [
+//
+//        ]);
+//    }
 
 }

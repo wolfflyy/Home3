@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Repository\OrderRepository;
+use App\Repository\OrderSessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -28,33 +28,28 @@ class RemoveExpiredCartsCommand extends Command
     private $entityManager;
 
     /**
-     * @var OrderRepository
+     * @var OrderSessionRepository
      */
-    private $orderRepository;
+    private $orderSessionRepository;
 
     protected static $defaultName = 'app:remove-expired-carts';
 
     /**
      * RemoveExpiredCartsCommand constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param OrderRepository $orderRepository
      */
-    public function __construct(EntityManagerInterface $entityManager, OrderRepository $orderRepository)
+    public function __construct(EntityManagerInterface $entityManager, OrderSessionRepository $orderSessionRepository)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
-        $this->orderRepository = $orderRepository;
+        $this->orderSessionRepository = $orderSessionRepository;
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function configure()
     {
         $this
             ->setDescription('Removes carts that have been inactive for a defined period')
-            ->addArgument('days',
+            ->addArgument(
+                'days',
                 InputArgument::OPTIONAL,
                 'The number of days a cart can remain inactive',
                 2
@@ -62,9 +57,6 @@ class RemoveExpiredCartsCommand extends Command
         ;
     }
 
-    /**
-     * @inheritDoc
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
@@ -73,6 +65,7 @@ class RemoveExpiredCartsCommand extends Command
 
         if ($days <= 0) {
             $io->error('The number of days should be greater than 0.');
+
             return Command::FAILURE;
         }
 
@@ -80,7 +73,7 @@ class RemoveExpiredCartsCommand extends Command
         $limitDate = new \DateTime("- $days days");
         $expiredCartsCount = 0;
 
-        while($carts = $this->orderRepository->findCartsNotModifiedSince($limitDate)) {
+        while ($carts = $this->orderSessionRepository->findCartsNotModifiedSince($limitDate)) {
             foreach ($carts as $cart) {
                 // Items will be deleted on cascade
                 $this->entityManager->remove($cart);
@@ -90,7 +83,7 @@ class RemoveExpiredCartsCommand extends Command
             $this->entityManager->clear(); // Detaches all object from Doctrine
 
             $expiredCartsCount += count($carts);
-        };
+        }
 
         if ($expiredCartsCount) {
             $io->success("$expiredCartsCount cart(s) have been deleted.");

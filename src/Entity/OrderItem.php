@@ -16,27 +16,21 @@ class OrderItem
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\GreaterThanOrEqual(1)
-     */
+    #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank()]
+    #[Assert\GreaterThanOrEqual(1)]
     private $quantity;
 
-    #[ORM\ManyToOne(targetEntity: Order::class, inversedBy: 'items')]
+    #[ORM\ManyToOne(targetEntity: OrderSession::class, inversedBy: 'items')]
     #[ORM\JoinColumn(nullable: false)]
     private $orderRef;
 
-    #[ORM\ManyToOne(targetEntity: Manga::class, inversedBy: 'orderItems')]
+    #[ORM\ManyToOne(targetEntity: Manga::class)]
     #[ORM\JoinColumn(nullable: false)]
     private $mangas;
 
     /**
      * Tests if the given item given corresponds to the same order item.
-     *
-     * @param OrderItem $item
-     *
-     * @return bool
      */
     public function equals(OrderItem $item): bool
     {
@@ -71,12 +65,12 @@ class OrderItem
         return $this;
     }
 
-    public function getOrderRef(): ?Order
+    public function getOrderRef(): ?OrderSession
     {
         return $this->orderRef;
     }
 
-    public function setOrderRef(?Order $orderRef): self
+    public function setOrderRef(?OrderSession $orderRef): self
     {
         $this->orderRef = $orderRef;
 

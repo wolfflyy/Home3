@@ -1,7 +1,7 @@
 <?php
 namespace App\Form\EventListener;
 
-use App\Entity\Order;
+use App\Entity\OrderSession;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -26,12 +26,12 @@ class ClearCartListener implements EventSubscriberInterface
         $form = $event->getForm();
         $cart = $form->getData();
 
-        if (!$cart instanceof Order) {
+        if (!$cart instanceof OrderSession) {
             return;
         }
 
         // Is the clear button clicked?
-        if (!$form->get('clear')->isClicked()) {
+        if (!$form->get('clear')->isSubmitted()) {
             return;
         }
         // Clears the cart

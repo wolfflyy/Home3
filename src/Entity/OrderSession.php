@@ -2,56 +2,37 @@
 
 namespace App\Entity;
 
-use App\Repository\OrderRepository;
+use App\Repository\OrderSessionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: OrderRepository::class)]
-class Order
+#[ORM\Entity(repositoryClass: OrderSessionRepository::class)]
+class OrderSession
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="orderRef", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'orderRef', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private $items;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255)]
     private $status = self::STATUS_CART;
-
-    /**
-     * An order that is in progress, not placed yet.
-     *
-     * @var string
-     */
-    const STATUS_CART = 'cart';
-
-    /**
-     * Calculates the order total.
-     *
-     * @return float
-     */
-    public function getTotal(): float
-    {
-        $total = 0;
-
-        foreach ($this->getItems() as $item){
-            $total += $item->getTotal();
-        }
-
-        return $total;
-    }
-
 
     #[ORM\Column(type: 'date')]
     private $createdAt;
 
     #[ORM\Column(type: 'date')]
     private $updatedAt;
+
+    /**
+     * An order that is in progress, not placed yet.
+     *
+     * @var string
+     */
+    public const STATUS_CART = 'cart';
 
     public function __construct()
     {
@@ -64,9 +45,8 @@ class Order
     }
 
     /**
-     * @return Collection<int, OrderItem>
+     * @return Collection|OrderItem[]
      */
-
     public function getItems(): Collection
     {
         return $this->items;
@@ -80,12 +60,25 @@ class Order
                 $existingItem->setQuantity(
                     $existingItem->getQuantity() + $item->getQuantity()
                 );
+
                 return $this;
             }
         }
 
         $this->items[] = $item;
         $item->setOrderRef($this);
+
+        return $this;
+    }
+
+    public function removeItem(OrderItem $item): self
+    {
+        if ($this->items->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getOrderRef() === $this) {
+                $item->setOrderRef(null);
+            }
+        }
 
         return $this;
     }
@@ -103,17 +96,6 @@ class Order
 
         return $this;
     }
-//    public function removeItem(OrderItem $item): self
-//    {
-//        if ($this->items->removeElement($item)) {
-//            // set the owning side to null (unless already changed)
-//            if ($item->getOrderRef() === $this) {
-//                $item->setOrderRef(null);
-//            }
-//        }
-//
-//        return $this;
-//    }
 
     public function getStatus(): ?string
     {
@@ -149,5 +131,19 @@ class Order
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    /**
+     * Calculates the order total.
+     */
+    public function getTotal(): float
+    {
+        $total = 0;
+
+        foreach ($this->getItems() as $item) {
+            $total += $item->getTotal();
+        }
+
+        return $total;
     }
 }
