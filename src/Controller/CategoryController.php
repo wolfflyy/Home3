@@ -45,17 +45,17 @@ class CategoryController extends AbstractController
 
     }
 
-    /**
-     * @Route("/category/sortByAZ", name="mangaByAZ")
-     */
-    public function mangaByAZAction(ManagerRegistry $doctrine, $value): Response
-    {
-        $mangas = $doctrine->getRepository(Manga::class)->findMangaByAZ($value);
-        $mangas = $genre->getMangas();
-        return $this->render('category/index.html.twig', [
-            'mangas' => $mangas
-        ]);
-    }
+//    /**
+//     * @Route("/category/sortByAZ", name="mangaByAZ")
+//     */
+//    public function mangaByAZAction(ManagerRegistry $doctrine, $value): Response
+//    {
+//        $mangas = $doctrine->getRepository(Manga::class)->findMangaByAZ($value);
+//        $mangas = $genre->getMangas();
+//        return $this->render('category/index.html.twig', [
+//            'mangas' => $mangas
+//        ]);
+//    }
 
 
 //    public function adminDashboard(): Response

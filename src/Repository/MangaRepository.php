@@ -69,7 +69,8 @@ class MangaRepository extends ServiceEntityRepository
 //        return $query->getResult();
 //    }
 //
-//    public function findMangaLatest(int $id): array
+
+//    public function findMangaLatest($value): array
 //    {
 //        $entitymanager = $this->getEntityManager();
 //
@@ -79,9 +80,25 @@ class MangaRepository extends ServiceEntityRepository
 //             WHERE m.create_date > :create_date
 //             ORDER BY m.create_date ASC'
 //
-//        )->setParameter('id', $id);
+//        )->setParameter('value', $value);
 //        return $query->getResult();
 //    }
+
+//    /**
+//     * @Return Manga[]
+//     */
+//
+//    public function findMangaLatest($value)
+//    {
+//        return $this->createQueryBuilder('m')
+//            ->andWhere('m.create_date >:val')
+//            ->setParameter('val', $value)
+//            ->orderBy('m.create_date', 'ASC')
+//            ->getQuery()
+//            ->getResult()
+//            ;
+//    }
+
 
 
 

@@ -12,17 +12,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class LatestController extends AbstractController
 {
     /**
-     * @Route("/latest", name="app_latest_manga")
+     * @Route("/latest{CreateDate}", name="app_latest_manga")
      */
     public function List(ManagerRegistry $doctrine, $create_date): Response
     {
         $entitymanager = $doctrine->getManager();
-        $manga = $doctrine->getRepository(Manga::class);
+        $manga = $entitymanager->getRepository(Manga::class);
+
+        $data = $manga->findMangaLatest($create_date);
 
 
-        $data = $mangas->findMangaLatest($create_date);
         return $this->render('latest/index.html.twig', array (
-            'manga' => $manga,
+            'manga' => $data,
         ));
     }
 }
