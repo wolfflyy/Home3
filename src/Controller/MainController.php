@@ -81,23 +81,9 @@ class MainController extends AbstractController
             return $this->redirectToRoute('app_view_manga', ['id' => $manga->getId()]);
         }
 
-//        $entitymanager = $doctrine->getManager();
-//        $manga = $entitymanager->getRepository(Manga::class);
-//        $genre = $entitymanager->getRepository(Genre::class);
-//        $artist = $entitymanager->getRepository(Artist::class);
-
-//        $manga = $doctrine->getRepository(Manga::class)->findMangaWithGenreAndArtist();
-//        $genre = $doctrine->getRepository(Genre::class)->findAll();
-//        $artist = $doctrine->getRepository(Artist::class)->findAll();
-
-//        $genreName = $manga->getGenre()->getGenreName();
-
         $manga = $doctrine->getRepository(Manga::class)->findManga($id);
         $genre = $doctrine->getRepository(Genre::class)->findAll();
         $artist = $doctrine->getRepository(Artist::class)->findAll();
-//        $genre = $manga->getGenre();
-//        $artist = $manga->getArtist();
-//        $form = $this->createForm(AddToCartType::class);
 
         return $this->render('Main/View.html.twig', array (
             'manga' => $manga,

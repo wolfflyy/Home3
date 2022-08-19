@@ -58,18 +58,6 @@ class AddMangaController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             /** @var UploadedFile $uploadedFile */
-//            $uploadedFile = $form['image']->getData();
-//            $destination = $this->getParameter('kernel.project.dir').'/public/uploads/manga_image';
-//            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-//            $newFilename = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
-//
-//            $uploadedFile->move(
-//                $destination,
-//                $newFilename
-//            );
-//            $addMangaType->setImage($newFilename);
-
-
             $uploadedFile = $form->get('image')->getData();
             if ($uploadedFile) {
                 $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -80,7 +68,6 @@ class AddMangaController extends AbstractController
                 // Move the file to the directory where image are stored
                 try {
                     $uploadedFile->move(
-//                        $this->getParameter('kernel.project.dir') . '/public/uploads/manga_image',
                         $this->getParameter('images_directory'),
                         $newFilename
                     );
@@ -92,13 +79,6 @@ class AddMangaController extends AbstractController
                     // ... handle exception if something happens during file upload
                 }
                 $manga->setImage($newFilename);
-
-
-//            $uploadedFile = $form->get('image')->getData();
-//            if ($uploadedFile) {
-//                $NewFilename = $fileUploader->upload($uploadedFile);
-//                $manga->setImage($NewFilename);
-//            }
 
                 $entitymanager = $doctrine->getManager();
                 $entitymanager->persist($manga);

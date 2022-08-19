@@ -20,22 +20,12 @@
                                     <div class="item-price">
                                     <td><b class="text-muted">Price:</b> {{ manga.price }} $</td>
                                     </div>
-{#                                    <div class="item-text">#}
-{#                                    <td><b class="text-muted">Description:</b> {{ manga.description }}</td>#}
-{#                                    </div>#}
                                     <div class="item-date">
                                     <td><b class="text-muted">Date Create:</b> {{ manga.CreateDate|date('F j,Y') }}</td>
                                     </div>
                                     <div class="item-buttons">
                                     <td>
-{#                                        <a href="{{ path('app_edit_manga', {'id':manga.id})}}" class="btn btn-success">Edit</a>#}
                                         <a href="{{ path('app_view_manga', {'id':manga.id})}}" class="btn btn-success">View</a>
-{#                                        <a href="{{ path('app_delete_manga', {'id':manga.id})}}" class="btn btn-danger">Delete</a>#}
-{#                                        <div class="form-group">#}
-{#                                            <label for="quantity">Quantity:</label>#}
-{#                                            <input type="number" class="form-control" id="quantity">#}
-{#                                        </div>#}
-{#                                        <button class="btn btn-warning">Add to Cart</button>#}
                                     </td>
                                     </div>
                             {% endfor %}
